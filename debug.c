@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include "header.h"
 int invalid_op(const char *s){
     int number_of_ok = 0;
     for(int i=0;s[i]!='\0';i++){
@@ -61,18 +60,46 @@ void check(char* operator,char* op1,char* op2,char* res){
     }
 
     if(*operator=='+') {
-        if (o1 + o2 == r)printf("%d + %d = %d\n",o1,o2,r);
+        if (o1 + o2 == r){
+            mx_printint(o1);
+            mx_printstr(" + ");
+            mx_printint(o2);
+            mx_printstr(" = ");
+            mx_printint(r);
+            mx_printchar('\n');
+        }
     }else if(*operator=='-'){
 //        if(o2==310701)printf("check %d - %d = %d is %d\n",o1,o2,r,o1-o2==r);
-        if(o1-o2==r)printf("%d - %d = %d\n",o1,o2,r);
+        if(o1-o2==r){
+            mx_printint(o1);
+            mx_printstr(" - ");
+            mx_printint(o2);
+            mx_printstr(" = ");
+            mx_printint(r);
+            mx_printchar('\n');
+        }
     }else if(*operator=='*'){
-        if(o1*o2==r)printf("%d * %d = %d\n",o1,o2,r);
+        if(o1*o2==r){
+            mx_printint(o1);
+            mx_printstr(" * ");
+            mx_printint(o2);
+            mx_printstr(" = ");
+            mx_printint(r);
+            mx_printchar('\n');
+        }
     }
     if(*operator=='/'){
-        if(o1/o2==r)printf("%d / %d = %d\n",o1,o2,r);
+        if(o1/o2==r){
+            mx_printint(o1);
+            mx_printstr(" / ");
+            mx_printint(o2);
+            mx_printstr(" = ");
+            mx_printint(r);
+            mx_printchar('\n');
+        }
     }
 }
-int process(char* operator, char* op1, char* op2, char*res){
+void process(char* operator, char* op1, char* op2, char*res){
     int no_questions = 1;
     if(operator[0]=='?'){
         no_questions = 0;
@@ -132,30 +159,36 @@ int process(char* operator, char* op1, char* op2, char*res){
 }
 int main(int n,char*args[]){
     if(n!=5){
-        printf("usage: ./part_of_the_matrix [operand1] [operator] [operand2] [result]\n");
+        mx_printstr("usage: ./part_of_the_matrix [operand1] [operator] [operand2] [result]\n");
         exit(0);
     }
 //    printf("%s\n%s\n%s\n%s\n",args[1],args[2],args[3],args[4]);
     if(invalid_op(args[2])){
-        printf("invalid operator: %s\n",args[2]);
+        mx_printstr("invalid operator: ");
+        mx_printstr(args[2]);
+        mx_printchar('\n');
         exit(0);
     }
     if(invalid_n(args[1])){
-        printf("invalid operand: %s\n",args[1]);
+        mx_printstr("invalid operand: ");
+        mx_printstr(args[1]);
+        mx_printchar('\n');
         exit(0);
     }
     if(invalid_n(args[3])){
-        printf("invalid operand: %s\n",args[3]);
+        mx_printstr("invalid operand: ");
+        mx_printstr(args[3]);
+        mx_printchar('\n');
         exit(0);
     }
     if(invalid_n(args[4])){
-        printf("invalid result: %s\n",args[4]);
+        mx_printstr("invalid result: ");
+        mx_printstr(args[4]);
+        mx_printchar('\n');
     }
     char *operator = format(args[2]);
     char *op1 = format(args[1]);
     char *op2 = format(args[3]);
     char *res = format(args[4]);
     process(operator,op1,op2,res);
-
-
 }
