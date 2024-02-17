@@ -43,7 +43,7 @@ char * format(char *x){
     y[j]='\0';
     return y;
 }
-int check(char* operator,char* op1,char* op2,char* res){
+void check(char* operator,char* op1,char* op2,char* res){
     int o1 = 0;
     for(int i=0;op1[i]!='\0';i++){
         o1*=10;
@@ -61,63 +61,18 @@ int check(char* operator,char* op1,char* op2,char* res){
     }
 
     if(*operator=='+') {
-        if (o1 + o2 == r)return 1;
-        return 0;
-    }
-    if(*operator=='-'){
-        if(o1-o2==r)return 1;
-        return 0;
-    }
-    if(*operator=='*'){
-        if(o1*o2==r)return 1;
-        return 0;
+        if (o1 + o2 == r)printf("%d + %d = %d\n",o1,o2,r);
+    }else if(*operator=='-'){
+//        if(o2==310701)printf("check %d - %d = %d is %d\n",o1,o2,r,o1-o2==r);
+        if(o1-o2==r)printf("%d - %d = %d\n",o1,o2,r);
+    }else if(*operator=='*'){
+        if(o1*o2==r)printf("%d * %d = %d\n",o1,o2,r);
     }
     if(*operator=='/'){
-        if(o1/o2==r)return 1;
-        return 0;
+        if(o1/o2==r)printf("%d / %d = %d\n",o1,o2,r);
     }
-    return 0;
 }
-void output(char* op1,char*operator,char*op2,char*res){
-    for(int i=0,flag=0;op1[i]!='\0';i++){
-        if(!flag&&op1[i]=='0'){
-            if(op1[i+1]=='\0')printf("0");
-            continue;
-        }
-        else {
-            flag=1;
-            printf("%c",op1[i]);
-        }
-    }
-    printf(" %c ",*operator);
-    for(int i=0,flag=0;op2[i]!='\0';i++){
-        if(!flag&&op2[i]=='0'){
-            if(op2[i+1]=='\0')printf("0");
-            continue;
-        }
-        else {
-            flag=1;
-            printf("%c",op2[i]);
-        }
-    }
-    printf(" = ");
-    for(int i=0,flag=0;res[i]!='\0';i++){
-        if(!flag&&res[i]=='0') {
-            if(res[i+1]=='\0')printf("0");
-            continue;
-        }
-        else {
-            flag=1;
-            printf("%c",res[i]);
-        }
-    }
-    printf("\n");
-
-}
-//long long iteration=0;
 int process(char* operator, char* op1, char* op2, char*res){
-//    iteration++;
-//    printf("%lld\n",iteration);
     int no_questions = 1;
     if(operator[0]=='?'){
         no_questions = 0;
@@ -170,9 +125,8 @@ int process(char* operator, char* op1, char* op2, char*res){
         }
     }
     if(no_questions){
-//        printf("checking %s %s %s %s\n",op1,operator,op2,res);
-        if(check(operator,op1,op2,res))
-            output(op1,operator,op1,res);//TODO ...
+
+        check(operator,op1,op2,res);
     }
 
 }
