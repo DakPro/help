@@ -27,10 +27,10 @@ int invalid_n(const char *s){
 
     return 0;
 }
-void format(char *x,char *y){
+char * format(char *x){
     int l = 0;
-    while(x[l]!='\0')if(x[l]!=' ')l++;   //find number of digits or '?';
-    y=malloc(sizeof(char)*(l+1));
+    while(x[l]!='\0')if(x[l]!=' ')l++;//find number of digits or '?';
+    char *y=malloc(sizeof(char)*(l+2));
     int j=0;
     for(int i=0;x[i]!='\0';i++){
         if(x[i]!=' '){
@@ -39,6 +39,10 @@ void format(char *x,char *y){
         }
     }
     y[j]='\0';
+    return y;
+}
+void check(char* operator,char* op1,char* op2,char* res){
+
 }
 int process(char* operator, char* op1, char* op2, char*res){
     int no_questions = 1;
@@ -90,6 +94,7 @@ int main(int n,char*args[]){
         printf("usage: ./part_of_the_matrix [operand1] [operator] [operand2] [result]\n");
         exit(0);
     }
+    printf("%s\n%s\n%s\n%s\n",args[1],args[2],args[3],args[4]);
     if(invalid_op(args[2])){
         printf("invalid operation: %s\n",args[2]);
         exit(0);
@@ -102,11 +107,10 @@ int main(int n,char*args[]){
         printf("invalid operand: %s\n",args[3]);
         exit(0);
     }
-    char*operator,*op1,*op2,*res;
-    format(args[2],operator);
-    format(args[1],op1);
-    format(args[3],op2);
-    format(args[4],res);
+    char *operator = format(args[2]);
+    char *op1 = format(args[1]);
+    char *op2 = format(args[3]);
+    char *res = format(args[4]);
     process(operator,op1,op2,res);
 
 
