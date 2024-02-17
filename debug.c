@@ -41,7 +41,66 @@ char * format(char *x){
     y[j]='\0';
     return y;
 }
-void check(char* operator,char* op1,char* op2,char* res){
+int check(char* operator,char* op1,char* op2,char* res){
+    int o1 = 0;
+    for(int i=0;op1[i]!='\0';i++){
+        o1*=10;
+        o1+=(op1[i]-'0');
+    }
+    int o2 = 0;
+    for(int i=0;op2[i]!='\0';i++){
+        o2*=10;
+        o2+=(op2[i]-'0');
+    }
+    int r = 0;
+    for(int i=0;res[i]!='\0';i++){
+        r*=10;
+        r+=(res[i]-'0');
+    }
+
+    if(*operator=='+') {
+        if (o1 + o2 == r)return 1;
+        return 0;
+    }
+    if(*operator=='-'){
+        if(o1-o2==r)return 1;
+        return 0;
+    }
+    if(*operator=='*'){
+        if(o1*o2==r)return 1;
+        return 0;
+    }
+    if(*operator=='/'){
+        if(o1/o2==r)return 1;
+        return 0;
+    }
+    return 0;
+}
+void output(char* op1,char*operator,char*op2,char*res){
+    for(int i=0,flag=0;op1[i]!='\0';i++){
+        if(!flag&&op1[i]=='0')continue;
+        else {
+            flag=1;
+            printf("%c",op1[i]);
+        }
+    }
+    printf(" %c ",*operator);
+    for(int i=0,flag=0;op2[i]!='\0';i++){
+        if(!flag&&op2[i]=='0')continue;
+        else {
+            flag=1;
+            printf("%c",op2[i]);
+        }
+    }
+    printf(" = ");
+    for(int i=0,flag=0;res[i]!='\0';i++){
+        if(!flag&&res[i]=='0')continue;
+        else {
+            flag=1;
+            printf("%c",res[i]);
+        }
+    }
+    printf("\n");
 
 }
 int process(char* operator, char* op1, char* op2, char*res){
@@ -85,7 +144,8 @@ int process(char* operator, char* op1, char* op2, char*res){
         }
     }
     if(no_questions){
-        check(operator,op1,op2,res);        //TODO ...
+        if(check(operator,op1,op2,res))
+            output(op1,operator,op1,res);//TODO ...
     }
 
 }
