@@ -78,7 +78,10 @@ int check(char* operator,char* op1,char* op2,char* res){
 }
 void output(char* op1,char*operator,char*op2,char*res){
     for(int i=0,flag=0;op1[i]!='\0';i++){
-        if(!flag&&op1[i]=='0')continue;
+        if(!flag&&op1[i]=='0'){
+            if(op1[i+1]=='\0')printf("0");
+            continue;
+        }
         else {
             flag=1;
             printf("%c",op1[i]);
@@ -86,7 +89,10 @@ void output(char* op1,char*operator,char*op2,char*res){
     }
     printf(" %c ",*operator);
     for(int i=0,flag=0;op2[i]!='\0';i++){
-        if(!flag&&op2[i]=='0')continue;
+        if(!flag&&op2[i]=='0'){
+            if(op2[i+1]=='\0')printf("0");
+            continue;
+        }
         else {
             flag=1;
             printf("%c",op2[i]);
@@ -94,7 +100,10 @@ void output(char* op1,char*operator,char*op2,char*res){
     }
     printf(" = ");
     for(int i=0,flag=0;res[i]!='\0';i++){
-        if(!flag&&res[i]=='0')continue;
+        if(!flag&&res[i]=='0') {
+            if(res[i+1]=='\0')printf("0");
+            continue;
+        }
         else {
             flag=1;
             printf("%c",res[i]);
@@ -123,6 +132,8 @@ int process(char* operator, char* op1, char* op2, char*res){
                 op1[i] = j;
                 process(operator, op1, op2, res);
             }
+            op1[i]='?';
+            break;
         }
     }
     for(int i=0;op2[i]!='\0';i++){
@@ -132,6 +143,8 @@ int process(char* operator, char* op1, char* op2, char*res){
                 op2[i] = j;
                 process(operator, op1, op2, res);
             }
+            op2[i]='?';
+            break;
         }
     }
     for(int i=0;res[i]!='\0';i++){
@@ -141,9 +154,12 @@ int process(char* operator, char* op1, char* op2, char*res){
                 res[i] = j;
                 process(operator, op1, op2, res);
             }
+            res[i]='?';
+            break;
         }
     }
     if(no_questions){
+//        printf("checking %s %s %s %s\n",op1,operator,op2,res);
         if(check(operator,op1,op2,res))
             output(op1,operator,op1,res);//TODO ...
     }
@@ -154,9 +170,9 @@ int main(int n,char*args[]){
         printf("usage: ./part_of_the_matrix [operand1] [operator] [operand2] [result]\n");
         exit(0);
     }
-    printf("%s\n%s\n%s\n%s\n",args[1],args[2],args[3],args[4]);
+//    printf("%s\n%s\n%s\n%s\n",args[1],args[2],args[3],args[4]);
     if(invalid_op(args[2])){
-        printf("invalid operation: %s\n",args[2]);
+        printf("invalid operator: %s\n",args[2]);
         exit(0);
     }
     if(invalid_n(args[1])){
@@ -166,6 +182,9 @@ int main(int n,char*args[]){
     if(invalid_n(args[3])){
         printf("invalid operand: %s\n",args[3]);
         exit(0);
+    }
+    if(invalid_n(args[4])){
+        printf("invalid result: %s\n",args[4]);
     }
     char *operator = format(args[2]);
     char *op1 = format(args[1]);
