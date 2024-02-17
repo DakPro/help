@@ -41,6 +41,48 @@ void format(char *x,char *y){
     y[j]='\0';
 }
 int process(char* operator, char* op1, char* op2, char*res){
+    int no_questions = 1;
+    if(operator[0]=='?'){
+        no_questions = 0;
+        operator[0]='+';
+        process(operator,op1,op2,res);
+        operator[0]='-';
+        process(operator,op1,op2,res);
+        operator[0]='*';
+        process(operator,op1,op2,res);
+        operator[0]='/';
+        process(operator,op1,op2,res);
+    }
+    for(int i=0;op1[i]!='\0';i++){
+        if(op1[i]=='?'){
+            no_questions = 0;
+            for(char j='0';j<='9';j++) {
+                op1[i] = j;
+                process(operator, op1, op2, res);
+            }
+        }
+    }
+    for(int i=0;op2[i]!='\0';i++){
+        if(op2[i]=='?'){
+            no_questions = 0;
+            for(char j='0';j<='9';j++) {
+                op2[i] = j;
+                process(operator, op1, op2, res);
+            }
+        }
+    }
+    for(int i=0;res[i]!='\0';i++){
+        if(res[i]=='?'){
+            no_questions = 0;
+            for(char j='0';j<='9';j++) {
+                res[i] = j;
+                process(operator, op1, op2, res);
+            }
+        }
+    }
+    if(no_questions){
+        check(operator,op1,op2,res);        //TODO ...
+    }
 
 }
 int main(int n,char*args[]){
@@ -60,10 +102,12 @@ int main(int n,char*args[]){
         printf("invalid operand: %s\n",args[3]);
         exit(0);
     }
-    char*operand,*op1,*op2,*res;
-    format(args[2],operand);
+    char*operator,*op1,*op2,*res;
+    format(args[2],operator);
     format(args[1],op1);
     format(args[3],op2);
     format(args[4],res);
-    process();
+    process(operator,op1,op2,res);
+
+
 }
