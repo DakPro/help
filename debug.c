@@ -125,37 +125,43 @@ int process(char* operator, char* op1, char* op2, char*res){
         operator[0]='/';
         process(operator,op1,op2,res);
     }
-    for(int i=0;op1[i]!='\0';i++){
-        if(op1[i]=='?'){
-            no_questions = 0;
-            for(char j='0';j<='9';j++) {
-                op1[i] = j;
-                process(operator, op1, op2, res);
+    if(no_questions) {
+        for (int i = 0; op1[i] != '\0'; i++) {
+            if (op1[i] == '?') {
+                no_questions = 0;
+                for (char j = '0'; j <= '9'; j++) {
+                    op1[i] = j;
+                    process(operator, op1, op2, res);
+                }
+                op1[i] = '?';
+                break;
             }
-            op1[i]='?';
-            break;
         }
     }
-    for(int i=0;op2[i]!='\0';i++){
-        if(op2[i]=='?'){
-            no_questions = 0;
-            for(char j='0';j<='9';j++) {
-                op2[i] = j;
-                process(operator, op1, op2, res);
+    if(no_questions) {
+        for (int i = 0; op2[i] != '\0'; i++) {
+            if (op2[i] == '?') {
+                no_questions = 0;
+                for (char j = '0'; j <= '9'; j++) {
+                    op2[i] = j;
+                    process(operator, op1, op2, res);
+                }
+                op2[i] = '?';
+                break;
             }
-            op2[i]='?';
-            break;
         }
     }
-    for(int i=0;res[i]!='\0';i++){
-        if(res[i]=='?'){
-            no_questions = 0;
-            for(char j='0';j<='9';j++) {
-                res[i] = j;
-                process(operator, op1, op2, res);
+    if(no_questions) {
+        for (int i = 0; res[i] != '\0'; i++) {
+            if (res[i] == '?') {
+                no_questions = 0;
+                for (char j = '0'; j <= '9'; j++) {
+                    res[i] = j;
+                    process(operator, op1, op2, res);
+                }
+                res[i] = '?';
+                break;
             }
-            res[i]='?';
-            break;
         }
     }
     if(no_questions){
