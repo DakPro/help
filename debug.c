@@ -29,7 +29,9 @@ int invalid_n(const char *s){
 }
 char * format(char *x){
     int l = 0;
-    while(x[l]!='\0')if(x[l]!=' ')l++;//find number of digits or '?';
+    for(int i=0;x[i]!='\0';i++) {
+        if (x[i] != ' ')l++;    //find number of digits or '?';
+    }
     char *y=malloc(sizeof(char)*(l+2));
     int j=0;
     for(int i=0;x[i]!='\0';i++){
@@ -112,7 +114,10 @@ void output(char* op1,char*operator,char*op2,char*res){
     printf("\n");
 
 }
+//long long iteration=0;
 int process(char* operator, char* op1, char* op2, char*res){
+//    iteration++;
+//    printf("%lld\n",iteration);
     int no_questions = 1;
     if(operator[0]=='?'){
         no_questions = 0;
