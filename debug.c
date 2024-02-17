@@ -21,12 +21,27 @@ int invalid_op(const char *s){
         return 0;               // if reached here we have only ' ' and 1 "ok" operand
 }
 int invalid_n(const char *s){
-    for(int i=0;s[i]!='\0';i++){
-        if( ! ((s[i]-'0'>=0 && s[i]-'0'<10)||s[i]==' '||s[i]=='?')){
+    for(int i=0;s[i]!='\0';i++)
+        if( ! ((s[i]-'0'>=0 && s[i]-'0'<10)||s[i]==' '||s[i]=='?'))
             return 1;
+
+    return 0;
+}
+void format(char *x,char *y){
+    int l = 0;
+    while(x[l]!='\0')if(x[l]!=' ')l++;   //find number of digits or '?';
+    y=malloc(sizeof(char)*(l+1));
+    int j=0;
+    for(int i=0;x[i]!='\0';i++){
+        if(x[i]!=' '){
+            y[j]=x[i];
+            j++;
         }
     }
-    return 0;
+    y[j]='\0';
+}
+int process(char* operator, char* op1, char* op2, char*res){
+
 }
 int main(int n,char*args[]){
     if(n!=5){
@@ -45,4 +60,10 @@ int main(int n,char*args[]){
         printf("invalid operand: %s\n",args[3]);
         exit(0);
     }
+    char*operand,*op1,*op2,*res;
+    format(args[2],operand);
+    format(args[1],op1);
+    format(args[3],op2);
+    format(args[4],res);
+    process();
 }
