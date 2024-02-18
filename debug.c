@@ -1,5 +1,8 @@
 #include <stdlib.h>
-#include "header.h"
+#include "./src/mx_printstr.c"
+#include "./src/mx_printint.c"
+#include "./src/mx_printchar.c"
+#include "./src/mx_strlen.c"
 int invalid_op(const char *s){
     int number_of_ok = 0;
     for(int i=0;s[i]!='\0';i++){
@@ -55,18 +58,21 @@ void check(char* operator,char* op1,char* op2,char* res){
     int o1 = 0;
     for(int i=0;op1[i]!='\0';i++){
         o1*=10;
-        o1+=(op1[i]!='-'?op1[i]-'0':-1);
+        o1+=(op1[i]!='-'?op1[i]-'0':0);
     }
+    if(op1[0]=='-')o1=-o1;
     int o2 = 0;
     for(int i=0;op2[i]!='\0';i++){
         o2*=10;
-        o2+=(op2[i]!='-'?op2[i]-'0':-1);
+        o2+=(op2[i]!='-'?op2[i]-'0':0);
     }
+    if(op2[0]=='-')o2=-o2;
     int r = 0;
     for(int i=0;res[i]!='\0';i++){
         r*=10;
-        r+=(op2[i]!='-'?res[i]-'0':-1);
+        r+=(op2[i]!='-'?res[i]-'0':0);
     }
+    if(res[0]=='-')r=-r;
 
     if(*operator=='+') {
         if (o1 + o2 == r){
@@ -161,7 +167,6 @@ void process(char* operator, char* op1, char* op2, char*res){
         }
     }
     if(no_questions){
-
         check(operator,op1,op2,res);
     }
 
