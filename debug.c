@@ -20,9 +20,18 @@ int invalid_op(const char *s){
         return 0;               // if reached here we have only ' ' and 1 "ok" operand
 }
 int invalid_n(const char *s){
+    int start = 0;
     for(int i=0;s[i]!='\0';i++)
-        if( ! ((s[i]-'0'>=0 && s[i]-'0'<10)||s[i]==' '||s[i]=='?'))
-            return 1;
+        if( ! ((s[i]-'0'>=0 && s[i]-'0'<10)||s[i]==' '||s[i]=='?')) {
+            if(s[i]=='-'){
+                start++;
+                if(start>1)return 1;
+            }else {
+                return 1;
+            }
+        }else{
+            if(!start)start++;
+        }
 
     return 0;
 }
@@ -46,17 +55,17 @@ void check(char* operator,char* op1,char* op2,char* res){
     int o1 = 0;
     for(int i=0;op1[i]!='\0';i++){
         o1*=10;
-        o1+=(op1[i]-'0');
+        o1+=(op1[i]!='-'?op1[i]-'0':-1);
     }
     int o2 = 0;
     for(int i=0;op2[i]!='\0';i++){
         o2*=10;
-        o2+=(op2[i]-'0');
+        o2+=(op2[i]!='-'?op2[i]-'0':-1);
     }
     int r = 0;
     for(int i=0;res[i]!='\0';i++){
         r*=10;
-        r+=(res[i]-'0');
+        r+=(op2[i]!='-'?res[i]-'0':-1);
     }
 
     if(*operator=='+') {
