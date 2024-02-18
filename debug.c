@@ -70,7 +70,7 @@ void check(char* operator,char* op1,char* op2,char* res){
     int r = 0;
     for(int i=0;res[i]!='\0';i++){
         r*=10;
-        r+=(op2[i]!='-'?res[i]-'0':0);
+        r+=(res[i]!='-'?res[i]-'0':0);
     }
     if(res[0]=='-')r=-r;
 
